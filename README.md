@@ -1,2 +1,3 @@
-# stat-456
-UW-Madison Stat 456 Project Repository
+# Stat 456
+- [Proposal](./report.pdf)
+- [Analysis](./analysis.Rmd)

@@ -1,0 +1,47 @@
+---
+title: "Untitled"
+author: "Junhyeok Park"
+date: "2023-03-28"
+output: html_document
+---
+
+```{r include=FALSE}
+library(tidyverse)
+library(ggplot2)
+```
+
+```{r}
+# read the raw data - Breast Cancer in Wisconsin
+df = read.table("breast-cancer-wisconsin.data", sep="," )
+
+# read attribute names
+col_names = readLines("breast-cancer-wisconsin.names")[106:116]
+
+new_col_names = c("sample", "clump_thickness", "uniformity_cell_size", "uniformity_cell_shape", "adhesion", "single_epitelial_cell_size", "bare_nuclei", "bland_chromatin", "normal_nucleoli", "mitoses", "class")
+
+# change the column names accordingly
+colnames(df) = new_col_names
+
+head(df)
+```
+
+## EDA
+
+Notice `bare_nuclei` column contains character value data type. The data set contains missing values as a question mark. Let's change the data type of the column accordingly and missing values as NA.
+
+```{r}
+# look for missing values
+str(df)
+```
+
+```{r}
+# change the data type accordingly and indicate missing values with NA
+df = df %>% 
+  mutate(bare_nuclei = case_when(
+    bare_nuclei == "?" ~ NA,
+    .default = as.integer(bare_nuclei)
+  )) %>% 
+  suppressWarnings()
+
+str(df)
+```
